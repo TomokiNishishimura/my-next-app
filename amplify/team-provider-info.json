@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "mynextapp80a277df": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2o22v9az5zg7s",
+          "type": "cicd"
+        }
       }
     }
   }

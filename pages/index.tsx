@@ -10,12 +10,14 @@ import { listPosts } from '../src/graphql/queries';
 import { createPost } from '../src/graphql/mutations';
 import { CreatePostMutation } from '../src/API';
 import { Authenticator } from '@aws-amplify/ui-react';
+import { StorageRemoveConfig } from '@aws-amplify/storage';
 
 Amplify.configure({ ...awsExports, ssr: true });
 
 interface Post {
   id: string;
-  message: string;
+  title: string;
+  content: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -40,7 +42,8 @@ const handleCreatePost = async (event: React.FormEvent<HTMLFormElement>) => {
       query: createPost,
       variables: {
         input: {
-          message: form.get("message"),
+          title: form.get("title"),
+          content: form.get("content"),
         },
       },
     });
@@ -75,7 +78,8 @@ const Home = ({ posts = [] }: { posts: Post[] }) => {
           <p className={styles.grid}>
             {posts.map((post) => (
               <a className={styles.card} href={`/posts/${post.id}`} key={post.id}>
-                <p>{post.message}</p>
+                <h3>{post.title}</h3>
+                <p>{post.content}</p>
               </a>
             ))}
 
@@ -85,10 +89,17 @@ const Home = ({ posts = [] }: { posts: Post[] }) => {
               
                 <form onSubmit={handleCreatePost}>
                   <fieldset>
+                    <legend>タイトル</legend>
+                    <input
+                      defaultValue={`Today, ${new Date().toLocaleTimeString()}`}
+                      name="title"
+                    />
+                  </fieldset>
+                  <fieldset>
                     <legend>メッセージ</legend>
                     <textarea
                       defaultValue="Amplify + Next.js + Typescriptでアプリつくってみた!"
-                      name="message"
+                      name="content"
                     />
                   </fieldset>
 
