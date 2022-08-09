@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "mynextapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authmynextapp80a277df",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
